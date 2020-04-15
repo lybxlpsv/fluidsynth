@@ -2787,7 +2787,7 @@ fluid_synth_program_change(fluid_synth_t *synth, int chan, int prognum)
         subst_bank = ((channel->lsb) * 129) + channel->msb;
         if ((channel->msb == 0) && (channel->channel_type == CHANNEL_TYPE_DRUM))
             subst_bank = ((channel->lsb) * 129) + 128;
-        FLUID_LOG(FLUID_WARN, "LOOKUP [bank=%d msb=%d lsb=%d prog=%d]", subst_bank, channel->msb, channel->lsb, subst_prog);
+        //FLUID_LOG(FLUID_WARN, "LOOKUP [bank=%d msb=%d lsb=%d prog=%d]", subst_bank, channel->msb, channel->lsb, subst_prog);
         subst_prog = prognum;
 
         preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
@@ -2822,6 +2822,13 @@ fluid_synth_program_change(fluid_synth_t *synth, int chan, int prognum)
                 //     preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
                 // }
 
+                if(!preset)
+                {
+                    subst_bank = ((channel->lsb) * 129);
+                    FLUID_LOG(FLUID_WARN, "LOOKUP LSB [bank=%d msb=%d lsb=%d prog=%d]", subst_bank, channel->msb, channel->lsb, subst_prog);
+                    preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
+                }
+
                 if (channel->synth->bank_select == FLUID_BANK_STYLE_XG)
                 {
                     if(!preset)
@@ -2835,16 +2842,15 @@ fluid_synth_program_change(fluid_synth_t *synth, int chan, int prognum)
                 if(!preset)
                 {
                      subst_bank = channel->msb;
-                     FLUID_LOG(FLUID_WARN, "LOOKUP [bank=%d msb=%d lsb=%d prog=%d]", subst_bank, channel->msb, channel->lsb, subst_prog);
+                     FLUID_LOG(FLUID_WARN, "MSB lookup [bank=%d msb=%d lsb=%d prog=%d]", subst_bank, channel->msb, channel->lsb, subst_prog);
                      preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
                 }
-                
 
                 /* Fallback first to bank 0:prognum */
                 if(!preset)
                 {
                     subst_bank = 0;
-                    FLUID_LOG(FLUID_WARN, "LOOKUP [bank=%d msb=%d lsb=%d prog=%d]", subst_bank, channel->msb, channel->lsb, subst_prog);
+                    FLUID_LOG(FLUID_WARN, "LOOKUP0 [bank=%d msb=%d lsb=%d prog=%d]", subst_bank, channel->msb, channel->lsb, subst_prog);
                     preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
                 }
                 
@@ -2852,7 +2858,7 @@ fluid_synth_program_change(fluid_synth_t *synth, int chan, int prognum)
                 if(!preset)
                 {
                     subst_prog = 0;
-                    FLUID_LOG(FLUID_WARN, "LOOKUP [bank=%d msb=%d lsb=%d prog=%d]", subst_bank, channel->msb, channel->lsb, subst_prog);
+                    FLUID_LOG(FLUID_WARN, "LOOKUP00 [bank=%d msb=%d lsb=%d prog=%d]", subst_bank, channel->msb, channel->lsb, subst_prog);
                     preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
                 }
             }
