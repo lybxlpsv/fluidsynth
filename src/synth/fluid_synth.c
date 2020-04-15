@@ -2784,7 +2784,7 @@ fluid_synth_program_change(fluid_synth_t *synth, int chan, int prognum)
     */
     if(prognum != FLUID_UNSET_PROGRAM)
     {
-        subst_bank = ((channel->lsb) * 129) + channel->msb
+        subst_bank = ((channel->lsb) * 129) + channel->msb;
         subst_prog = prognum;
 
         preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
