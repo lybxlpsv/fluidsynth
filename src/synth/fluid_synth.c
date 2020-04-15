@@ -2785,6 +2785,8 @@ fluid_synth_program_change(fluid_synth_t *synth, int chan, int prognum)
     if(prognum != FLUID_UNSET_PROGRAM)
     {
         subst_bank = ((channel->lsb) * 129) + channel->msb;
+        if ((channel_msb == 0) && (channel->channel_type == CHANNEL_TYPE_DRUM))
+            subst_bank = ((channel->lsb) * 129) + 128;
         FLUID_LOG(FLUID_WARN, "LOOKUP [bank=%d msb=%d lsb=%d prog=%d]", subst_bank, channel->msb, channel->lsb, subst_prog);
         subst_prog = prognum;
 
