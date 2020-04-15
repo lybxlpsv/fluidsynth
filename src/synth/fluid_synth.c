@@ -2802,14 +2802,26 @@ fluid_synth_program_change(fluid_synth_t *synth, int chan, int prognum)
             /* Melodic instrument */
             else
             {
+                
+                if ((banknum >= 128) && ((banknum % 128) == 0))
+                {
+                    subst_bank = banknum / 128;
+                    preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
+                }
+
+                if(!preset)
+                {
+                    subst_bank = banknum % 128;
+                    preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
+                }
+
                 /* Fallback first to bank 0:prognum */
-                subst_bank = banknum % 128;
-                preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
                 if(!preset)
                 {
                     subst_bank = 0;
                     preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
                 }
+                
                 /* Fallback to first preset in bank 0 (usually piano...) */
                 if(!preset)
                 {
