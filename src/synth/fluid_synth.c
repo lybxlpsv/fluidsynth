@@ -2784,7 +2784,7 @@ fluid_synth_program_change(fluid_synth_t *synth, int chan, int prognum)
     */
     if(prognum != FLUID_UNSET_PROGRAM)
     {
-        subst_bank = banknum;
+        subst_bank = ((channel->lsb) * 129) + channel->msb
         subst_prog = prognum;
 
         preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
@@ -2795,26 +2795,38 @@ fluid_synth_program_change(fluid_synth_t *synth, int chan, int prognum)
             /* Percussion: Fallback to preset 0 in percussion bank */
             if(channel->channel_type == CHANNEL_TYPE_DRUM)
             {
-                subst_prog = 0;
-                subst_bank = DRUM_INST_BANK;
+                subst_bank = ((channel->lsb) * 129) + DRUM_INST_BANK;
                 preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
+                if(!preset)
+                {
+                    subst_bank = DRUM_INST_BANK;
+                    preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
+                }
+                if(!preset)
+                {
+                    subst_prog = 0;
+                    preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
+                }
             }
             /* Melodic instrument */
             else
             {
                 
-                if(!preset)
-                {
-                    subst_bank = banknum / 128;
-                    FLUID_LOG(FLUID_WARN, "LOOKUP [bank=%d prog=%d]", subst_bank, subst_prog);
-                    preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
-                }
+                // if(!preset)
+                // {
+                //     subst_bank = banknum / 128;
+                //     FLUID_LOG(FLUID_WARN, "LOOKUP [bank=%d prog=%d]", subst_bank, subst_prog);
+                //     preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
+                // }
 
-                if(!preset)
+                if (channel->synth->bank_select == FLUID_BANK_STYLE_XG)
                 {
-                    subst_bank = banknum % 128;
-                    FLUID_LOG(FLUID_WARN, "LOOKUP [bank=%d prog=%d]", subst_bank, subst_prog);
-                    preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
+                    if(!preset)
+                    {
+                        subst_bank = channel->msb;
+                        FLUID_LOG(FLUID_WARN, "XGLOOKUP [bank=%d msb=%d lsb=%d prog=%d]", subst_bank, channel->msb, channel->lsb, subst_prog);
+                        preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
+                    }
                 }
 
                 /* Fallback first to bank 0:prognum */

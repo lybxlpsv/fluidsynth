@@ -119,7 +119,9 @@ struct _fluid_channel_t
 
     fluid_preset_t *preset;               /**< Selected preset */
     int sfont_bank_prog;                  /**< SoundFont ID (bit 21-31), bank (bit 7-20), program (bit 0-6) */
-
+    int msb;
+    int lsb;
+    
     /* NRPN system */
     enum fluid_gen_type nrpn_select;      /* Generator ID of SoundFont NRPN message */
     char nrpn_active;      /* 1 if data entry CCs are for NRPN, 0 if RPN */

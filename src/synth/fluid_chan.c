@@ -56,6 +56,8 @@ new_fluid_channel(fluid_synth_t *synth, int num)
     chan->channum = num;
     chan->preset = NULL;
     chan->tuning = NULL;
+    chan->msb = 0;
+    chan->lsb = 0;
 
     fluid_channel_init(chan);
     fluid_channel_init_ctrl(chan, 0);
@@ -289,6 +291,7 @@ void
 fluid_channel_set_bank_lsb(fluid_channel_t *chan, int banklsb)
 {
     int oldval, newval, style;
+    chan->lsb = banklsb;
 
     style = chan->synth->bank_select;
 
@@ -317,6 +320,7 @@ void
 fluid_channel_set_bank_msb(fluid_channel_t *chan, int bankmsb)
 {
     int oldval, newval, style;
+    chan->msb = bankmsb;
 
     style = chan->synth->bank_select;
 
