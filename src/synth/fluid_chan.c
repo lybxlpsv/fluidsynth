@@ -306,7 +306,7 @@ fluid_channel_set_bank_lsb(fluid_channel_t *chan, int banklsb)
     }
     else /* style == FLUID_BANK_STYLE_MMA */
     {
-        newval = (oldval & ~BANKLSB_MASKVAL) | (banklsb << BANK_SHIFTVAL);
+        newval = (oldval & ~BANKLSB_MASKVAL) | (banklsb << BANK_SHIFTVAL + 7);
     }
 
     chan->sfont_bank_prog = newval;
@@ -343,7 +343,7 @@ fluid_channel_set_bank_msb(fluid_channel_t *chan, int bankmsb)
     }
     else /* style == FLUID_BANK_STYLE_MMA */
     {
-        newval = (oldval & ~BANKMSB_MASKVAL) | (bankmsb << (BANK_SHIFTVAL + 7));
+        newval = (oldval & ~BANKMSB_MASKVAL) | (bankmsb << (BANK_SHIFTVAL));
     }
 
     chan->sfont_bank_prog = newval;
