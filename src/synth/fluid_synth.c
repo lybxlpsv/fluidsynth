@@ -2803,7 +2803,7 @@ fluid_synth_program_change(fluid_synth_t *synth, int chan, int prognum)
             else
             {
                 /* Fallback first to bank 0:prognum */
-                subst_bank = bankum % 128;
+                subst_bank = banknum % 128;
                 preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
                 if(!preset)
                 {
