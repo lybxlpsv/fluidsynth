@@ -2803,14 +2803,16 @@ fluid_synth_program_change(fluid_synth_t *synth, int chan, int prognum)
             else
             {
                 
-                if ((banknum >= 128) && ((banknum % 128) == 0))
+                if(!preset)
                 {
+                    FLUID_LOG(FLUID_WARN, "LOOKUP [bank=%d prog=%d]", subst_bank, subst_prog);
                     subst_bank = banknum / 128;
                     preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
                 }
 
                 if(!preset)
                 {
+                    FLUID_LOG(FLUID_WARN, "LOOKUP [bank=%d prog=%d]", subst_bank, subst_prog);
                     subst_bank = banknum % 128;
                     preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
                 }
@@ -2818,6 +2820,7 @@ fluid_synth_program_change(fluid_synth_t *synth, int chan, int prognum)
                 /* Fallback first to bank 0:prognum */
                 if(!preset)
                 {
+                    FLUID_LOG(FLUID_WARN, "LOOKUP [bank=%d prog=%d]", subst_bank, subst_prog);
                     subst_bank = 0;
                     preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
                 }
@@ -2825,6 +2828,7 @@ fluid_synth_program_change(fluid_synth_t *synth, int chan, int prognum)
                 /* Fallback to first preset in bank 0 (usually piano...) */
                 if(!preset)
                 {
+                    FLUID_LOG(FLUID_WARN, "LOOKUP [bank=%d prog=%d]", subst_bank, subst_prog);
                     subst_prog = 0;
                     preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
                 }
@@ -2832,7 +2836,7 @@ fluid_synth_program_change(fluid_synth_t *synth, int chan, int prognum)
 
             if(preset)
             {
-                FLUID_LOG(FLUID_WARN, "Instrument not found on channel %d [bank=%d, msb=%d, lsb=%d, prog=%d], substituted [bank=%d prog=%d]",
+                FLUID_LOG(FLUID_WARN, "Instrument not found on channel %d [bank=%d, prog=%d], substituted [bank=%d prog=%d]",
                           chan, banknum, prognum, subst_bank, subst_prog);
             }
             else
