@@ -2850,7 +2850,7 @@ fluid_synth_program_change(fluid_synth_t *synth, int chan, int prognum)
                 if(!preset)
                 {
                     subst_bank = 0;
-                    FLUID_LOG(FLUID_WARN, "LOOKUP0 [bank=%d msb=%d lsb=%d prog=%d]", subst_bank, channel->msb, channel->lsb, subst_prog);
+                    FLUID_LOG(FLUID_DBG, "LOOKUP0 [bank=%d msb=%d lsb=%d prog=%d]", subst_bank, channel->msb, channel->lsb, subst_prog);
                     preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
                 }
                 
@@ -2858,19 +2858,19 @@ fluid_synth_program_change(fluid_synth_t *synth, int chan, int prognum)
                 if(!preset)
                 {
                     subst_prog = 0;
-                    FLUID_LOG(FLUID_WARN, "LOOKUP00 [bank=%d msb=%d lsb=%d prog=%d]", subst_bank, channel->msb, channel->lsb, subst_prog);
+                    FLUID_LOG(FLUID_DBG, "LOOKUP00 [bank=%d msb=%d lsb=%d prog=%d]", subst_bank, channel->msb, channel->lsb, subst_prog);
                     preset = fluid_synth_find_preset(synth, subst_bank, subst_prog);
                 }
             }
 
             if(preset)
             {
-                FLUID_LOG(FLUID_WARN, "Instrument not found on channel %d [bank=%d, prog=%d], substituted [bank=%d prog=%d]",
-                          chan, banknum, prognum, subst_bank, subst_prog);
+                FLUID_LOG(FLUID_WARN, "Instrument not found on channel %d [bank=%d msb=%d lsb=%d prog=%d], substituted [bank=%d prog=%d]",
+                          chan, banknum, channel->msb, channel->lsb, prognum, subst_bank, subst_prog);
             }
             else
             {
-                FLUID_LOG(FLUID_WARN, "No preset found on channel %d [bank=%d prog=%d]", chan, banknum, prognum);
+                FLUID_LOG(FLUID_WARN, "No preset found on channel %d [bank=%d msb=%d lsb=%d prog=%d]", chan, banknum, channel->msb, channel->lsb, prognum);
             }
         }
     }
