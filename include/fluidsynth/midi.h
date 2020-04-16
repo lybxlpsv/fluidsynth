@@ -91,11 +91,6 @@ typedef enum
  */
 typedef int (*handle_midi_event_func_t)(void *data, fluid_midi_event_t *event);
 
-/*	ソースファイル midi.h に宣言を追加	*/
-/*	Bonkure: For C# project	*/
-FLUIDSYNTH_API fluid_midi_router_t *new_fluid_midi_router_for_csharp(void *settings, void *synth);
-FLUIDSYNTH_API fluid_midi_driver_t *new_fluid_midi_driver_for_csharp(void *settings, void *router);
-
 FLUIDSYNTH_API fluid_midi_router_t *new_fluid_midi_router(fluid_settings_t *settings,
         handle_midi_event_func_t handler,
         void *event_handler_data);
@@ -156,6 +151,11 @@ FLUIDSYNTH_API int fluid_player_get_midi_tempo(fluid_player_t *player);
 FLUIDSYNTH_API int fluid_player_seek(fluid_player_t *player, int ticks);
 
 ///
+
+/*	ソースファイル midi.h に宣言を追加	*/
+/*	Bonkure: For C# project	*/
+FLUIDSYNTH_API fluid_midi_router_t *new_fluid_midi_router_for_csharp(void *settings, void *synth);
+FLUIDSYNTH_API fluid_midi_driver_t *new_fluid_midi_driver_for_csharp(void *settings, void *router);
 
 #ifdef __cplusplus
 }
