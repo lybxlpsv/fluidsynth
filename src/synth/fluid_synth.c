@@ -2865,8 +2865,8 @@ fluid_synth_program_change(fluid_synth_t *synth, int chan, int prognum)
 
             if(preset)
             {
-                FLUID_LOG(FLUID_WARN, "Instrument not found on channel %d [bank=%d msb=%d lsb=%d prog=%d], substituted [bank=%d prog=%d]",
-                          chan, banknum, channel->msb, channel->lsb, prognum, subst_bank, subst_prog);
+                FLUID_LOG(FLUID_WARN, "Instrument not found on channel %d [bank=%d msb=%d lsb=%d prog=%d], substituted [bank=%d msb=%d lsb=%d prog=%d]",
+                          chan, banknum, channel->msb, channel->lsb, prognum, subst_bank, channel->msb, channel->lsb, subst_prog);
             }
             else
             {
