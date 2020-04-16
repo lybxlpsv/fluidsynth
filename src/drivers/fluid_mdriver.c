@@ -201,14 +201,14 @@ fluid_midi_driver_t *new_fluid_midi_driver_for_csharp(void *settings, void *rout
     
 	fluid_settings_getint(currentSettings, "synth.dump", &dump);
  
-    fluid_midi_driver_t *router = new_fluid_midi_driver(
+    fluid_midi_driver_t *mdriver = new_fluid_midi_driver(
                       settings,
                       dump ? fluid_midi_dump_prerouter : fluid_midi_router_handle_midi_event,
                       (void *) router);
-    if (router == NULL) {
+    if (mdriver == NULL) {
         return NULL;
     }
     else {
-        return router;
+        return mdriver;
     }
 }
