@@ -194,7 +194,7 @@ void delete_fluid_midi_driver(fluid_midi_driver_t *driver)
 
 /*	ソースファイル fluid_mdriver.c に関数を追加	*/
 /* Bonkure: For C# project */
-fluid_midi_router_t *new_fluid_midi_router_for_csharp(void *settings, void *synth)
+fluid_midi_router_t *new_fluid_midi_driver_for_csharp(void *settings, void *synth)
 {
     int dump = 0;
     fluid_settings_t *currentSettings = (fluid_settings_t *)settings;
