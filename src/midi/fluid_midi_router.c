@@ -66,27 +66,6 @@ struct _fluid_midi_router_rule_t
     int waiting;                             /* Set to TRUE when rule has been deactivated but there are still pending_events */
 };
 
-
-/*	ソースファイル fluid_midi_router.c に関数を追加	*/
-/*	Bonkure: For C# project	*/
-fluid_midi_router_t *new_fluid_midi_router_for_csharp(void *settings, void *synth)
-{
-    int dump = 0;
-    fluid_settings_t *currentSettings = (fluid_settings_t *)settings;
-    
-	fluid_settings_getint(currentSettings, "synth.dump", &dump);
- 
-    fluid_midi_router_t *router =
-    	new_fluid_midi_router(currentSettings, dump == 1 ? 
-				fluid_midi_dump_postrouter : fluid_synth_handle_midi_event, synth);
-    if (router == NULL) {
-        return NULL;
-    }
-    else {
-        return router;
-    }
-}
-
 /**
  * Create a new midi router.  The default rules will pass all events unmodified.
  * @param settings Settings used to configure MIDI router
@@ -933,4 +912,24 @@ int fluid_midi_dump_postrouter(void *data, fluid_midi_event_t *event)
     }
 
     return fluid_synth_handle_midi_event((fluid_synth_t *) data, event);
+}
+
+/*	ソースファイル fluid_midi_router.c に関数を追加	*/
+/*	Bonkure: For C# project	*/
+fluid_midi_router_t *new_fluid_midi_router_for_csharp(void *settings, void *synth)
+{
+    int dump = 0;
+    fluid_settings_t *currentSettings = (fluid_settings_t *)settings;
+    
+	fluid_settings_getint(currentSettings, "synth.dump", &dump);
+ 
+    fluid_midi_router_t *router =
+    	new_fluid_midi_router(currentSettings, dump == 1 ? 
+				fluid_midi_dump_postrouter : fluid_synth_handle_midi_event, synth);
+    if (router == NULL) {
+        return NULL;
+    }
+    else {
+        return router;
+    }
 }
