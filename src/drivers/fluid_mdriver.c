@@ -199,8 +199,6 @@ fluid_midi_driver_t *new_fluid_midi_driver_for_csharp(void *settings, void *rout
     int dump = 0;
     fluid_settings_t *currentSettings = (fluid_settings_t *)settings;
     
-	fluid_settings_getint(currentSettings, "synth.dump", &dump);
- 
     fluid_midi_driver_t *mdriver = new_fluid_midi_driver(
                       settings,
                       dump ? fluid_midi_dump_prerouter : fluid_midi_router_handle_midi_event,

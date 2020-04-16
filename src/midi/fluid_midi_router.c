@@ -921,8 +921,6 @@ fluid_midi_router_t *new_fluid_midi_router_for_csharp(void *settings, void *synt
     int dump = 0;
     fluid_settings_t *currentSettings = (fluid_settings_t *)settings;
     
-	fluid_settings_getint(currentSettings, "synth.dump", &dump);
- 
     fluid_midi_router_t *router =
     	new_fluid_midi_router(currentSettings, dump == 1 ? 
 				fluid_midi_dump_postrouter : fluid_synth_handle_midi_event, synth);
